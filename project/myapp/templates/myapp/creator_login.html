@@ -1,0 +1,28 @@
+{% extends 'myapp/base.html' %}
+{% load static %}
+{% block title %}Creator Login{% endblock %}
+{% block body %}
+<center>
+     <h2><font color="#366092">Creator Login</font></h2>
+        <img src="{% static 'myapp/images/person.png'%}" width="150" height="150">
+    <div class="container">
+        <form role="form" name="frm" action="{% url 'creator_login' %}"  method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="uname">User Name</label>
+                <input class="form-control" type="text" id="uname" name="uname">
+            </div>
+             <div class="form-group">
+                 <label for="uname">Password</label>
+                 <input class="form-control" type="password" id="passwd" name="passwd">
+             </div>
+            <button type="submit" class="btn-solid-reg" id="bt" name="bt">Login</button>
+            <button type="reset" class="btn-solid-reg" id="rt" name="rt">Reset</button>
+
+            <br/>  <br/>  <br/>
+        New Creator <a href="{% url 'creator_details_add' %}"><strong>Signup</strong></a> Here.
+        </form>
+    {{msg}}
+    </div>
+</center>
+{% endblock %}

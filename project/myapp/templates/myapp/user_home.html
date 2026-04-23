@@ -1,0 +1,411 @@
+{% extends 'myapp/user_base.html' %}
+{% load static %}
+{% block title %}CreatorHub - Projects Gallery{% endblock %}
+{% block body %}
+
+<!-- Modern Tailwind CSS Projects Section - Uniform Cards with No Gaps -->
+<style>
+    @keyframes fadeInScale {
+        from {
+            opacity: 0;
+            transform: scale(0.95);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+    
+    @keyframes slideUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .project-card {
+        animation: fadeInScale 0.5s ease-out forwards;
+    }
+    
+    .project-card:nth-child(1) { animation-delay: 0.05s; }
+    .project-card:nth-child(2) { animation-delay: 0.1s; }
+    .project-card:nth-child(3) { animation-delay: 0.15s; }
+    .project-card:nth-child(4) { animation-delay: 0.2s; }
+    .project-card:nth-child(5) { animation-delay: 0.25s; }
+    .project-card:nth-child(6) { animation-delay: 0.3s; }
+    
+    .hover-lift {
+        transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    }
+    
+    .hover-lift:hover {
+        transform: translateY(-6px);
+    }
+    
+    .image-zoom {
+        transition: transform 0.5s ease;
+    }
+    
+    .group:hover .image-zoom {
+        transform: scale(1.08);
+    }
+    
+    .overlay-grad {
+        background: linear-gradient(135deg, rgba(46, 204, 113, 0.9) 0%, rgba(30, 132, 73, 0.95) 100%);
+        transition: all 0.3s ease;
+    }
+    
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+    }
+    
+    ::-webkit-scrollbar-track {
+        background: #1e1e2e;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+        background: linear-gradient(135deg, #2ecc71, #27ae60);
+        border-radius: 10px;
+    }
+    
+    /* Gradient text animation */
+    .gradient-text {
+        background: linear-gradient(135deg, #2ecc71, #27ae60, #2ecc71);
+        background-size: 200% auto;
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        animation: shine 3s linear infinite;
+    }
+    
+    @keyframes shine {
+        0% { background-position: 0% center; }
+        100% { background-position: 200% center; }
+    }
+    
+    /* Line clamp for consistent text height */
+    .line-clamp-2 {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    
+    .line-clamp-1 {
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+</style>
+
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<!-- Custom Tailwind Configuration -->
+<script>
+    tailwind.config = {
+        theme: {
+            extend: {
+                colors: {
+                    'primary-green': '#2ecc71',
+                    'dark-green': '#27ae60',
+                    'deep-green': '#1e8449',
+                    'dark-bg': '#0a0a0f',
+                    'card-dark': '#13131a',
+                },
+                fontFamily: {
+                    'poppins': ['Poppins', 'sans-serif'],
+                    'inter': ['Inter', 'sans-serif'],
+                }
+            }
+        }
+    }
+</script>
+
+<!-- Additional Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+<div class="min-h-screen bg-gradient-to-br from-dark-bg via-[#0d0d14] to-dark-bg">
+    
+    <!-- Hero Header Section -->
+    <div class="relative overflow-hidden pt-16 pb-12 px-4">
+        <div class="absolute inset-0 opacity-30">
+            <div class="absolute top-20 left-10 w-72 h-72 bg-primary-green/20 rounded-full blur-3xl"></div>
+            <div class="absolute bottom-20 right-10 w-96 h-96 bg-dark-green/20 rounded-full blur-3xl"></div>
+        </div>
+        
+        <div class="max-w-7xl mx-auto text-center relative z-10">
+            <div class="inline-flex items-center justify-center mb-6">
+                <div class="relative">
+                    <div class="absolute inset-0 bg-primary-green/30 rounded-full blur-xl"></div>
+                    <div class="relative w-16 h-16 bg-gradient-to-br from-primary-green to-deep-green rounded-2xl flex items-center justify-center shadow-2xl">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            <h1 class="text-5xl md:text-6xl font-bold font-poppins mb-4">
+                <span class="gradient-text">CreatorHub</span>
+                <span class="text-white block mt-2">Featured Projects</span>
+            </h1>
+            <div class="w-20 h-1 bg-gradient-to-r from-primary-green to-dark-green rounded-full mx-auto my-6"></div>
+            <p class="text-gray-400 max-w-2xl mx-auto text-lg font-inter">
+                Discover exceptional work from talented creators around the world
+            </p>
+        </div>
+    </div>
+    
+    <!-- Projects Grid - Masonry Style with No Gaps -->
+    <div class="max-w-[1920px] mx-auto px-0">
+        <!-- Row 1 - 3 cards with no gaps -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0">
+            {% for pd in pd_list|slice:":3" %}
+            <!-- Project Card - Fixed height and width -->
+            <div class="project-card group relative bg-card-dark overflow-hidden h-[480px] w-full border-r border-b border-gray-800/50 hover:border-primary-green/20 transition-all duration-300">
+                <!-- Background Image with Zoom Effect -->
+                <div class="absolute inset-0 overflow-hidden">
+                    {% if pd.pic1 %}
+                    <img class="image-zoom w-full h-full object-cover opacity-70 group-hover:opacity-100 transition-all duration-500" 
+                         src="../static/myapp/media/{{ pd.pic1 }}" 
+                         alt="{{ pd.title }}"
+                         onerror="this.src='https://via.placeholder.com/600x480?text=CreatorHub'">
+                    {% else %}
+                    <div class="w-full h-full bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center">
+                        <svg class="w-24 h-24 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    {% endif %}
+                </div>
+                
+                <!-- Dark Overlay -->
+                <div class="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent opacity-80 group-hover:opacity-70 transition-all duration-300"></div>
+                
+                <!-- Green Hover Overlay -->
+                <div class="overlay-grad absolute inset-0 opacity-0 group-hover:opacity-80 transition-all duration-500 flex items-center justify-center">
+                    <a href="{{ pd.test_url }}" class="transform translate-y-8 group-hover:translate-y-0 transition-all duration-400">
+                        <div class="bg-white text-deep-green px-8 py-3 rounded-full font-bold flex items-center gap-2 shadow-2xl hover:shadow-lg transition-all hover:scale-105">
+                            <span>Explore Project</span>
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                            </svg>
+                        </div>
+                    </a>
+                </div>
+                
+                <!-- Content - Positioned at bottom -->
+                <div class="absolute bottom-0 left-0 right-0 p-6 z-10">
+                    <!-- Category Badge -->
+                    <div class="mb-3">
+                        <span class="inline-block bg-primary-green/20 backdrop-blur-sm text-primary-green text-xs font-bold px-3 py-1 rounded-full border border-primary-green/40">
+                            FEATURED
+                        </span>
+                    </div>
+                    
+                    <!-- Title -->
+                    <h3 class="text-2xl font-bold text-white font-poppins mb-2 line-clamp-1 group-hover:text-primary-green transition-colors">
+                        {{ pd.title }}
+                    </h3>
+                    
+                    <!-- Description - Fixed height for consistency -->
+                    <p class="text-gray-300 text-sm font-inter leading-relaxed line-clamp-2 max-h-12">
+                        Delivered to major company in pharmaceutical industry. Professional quality and creative excellence.
+                    </p>
+                    
+                    <!-- Meta Info -->
+                    <div class="flex items-center justify-between mt-4 pt-3 border-t border-white/10">
+                        <div class="flex items-center gap-2">
+                            <div class="w-6 h-6 rounded-full bg-primary-green/20 flex items-center justify-center">
+                                <svg class="w-3 h-3 text-primary-green" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M10 3.5l1.5 3.5h3.5l-2.5 2 1 3.5-2.5-1.5-2.5 1.5 1-3.5-2.5-2h3.5z"/>
+                                </svg>
+                            </div>
+                            <span class="text-gray-400 text-xs">4.8 rating</span>
+                        </div>
+                        <a href="{{ pd.test_url }}" class="text-primary-green text-sm font-semibold hover:text-white transition-colors flex items-center gap-1">
+                            View Details
+                            <svg class="w-3 h-3 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <!-- Row 2 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0">
+            {% for pd in pd_list|slice:"3:6" %}
+            <div class="project-card group relative bg-card-dark overflow-hidden h-[480px] w-full border-r border-b border-gray-800/50 hover:border-primary-green/20 transition-all duration-300">
+                <div class="absolute inset-0 overflow-hidden">
+                    {% if pd.pic2 %}
+                    <img class="image-zoom w-full h-full object-cover opacity-70 group-hover:opacity-100 transition-all duration-500" 
+                         src="../static/myapp/media/{{ pd.pic2 }}" 
+                         alt="{{ pd.title }}"
+                         onerror="this.src='https://via.placeholder.com/600x480?text=CreatorHub'">
+                    {% else %}
+                    <div class="w-full h-full bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center">
+                        <svg class="w-24 h-24 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                        </svg>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent opacity-80 group-hover:opacity-70 transition-all"></div>
+                <div class="overlay-grad absolute inset-0 opacity-0 group-hover:opacity-80 transition-all duration-500 flex items-center justify-center">
+                    <a href="{{ pd.test_url }}" class="transform translate-y-8 group-hover:translate-y-0 transition-all duration-400">
+                        <div class="bg-white text-deep-green px-8 py-3 rounded-full font-bold flex items-center gap-2 shadow-2xl hover:scale-105 transition-transform">
+                            <span>Explore Project</span>
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                            </svg>
+                        </div>
+                    </a>
+                </div>
+                <div class="absolute bottom-0 left-0 right-0 p-6 z-10">
+                    <div class="mb-3">
+                        <span class="inline-block bg-dark-green/20 backdrop-blur-sm text-dark-green text-xs font-bold px-3 py-1 rounded-full border border-dark-green/40">
+                            INNOVATION
+                        </span>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white font-poppins mb-2 line-clamp-1 group-hover:text-primary-green transition-colors">
+                        {{ pd.title }}
+                    </h3>
+                    <p class="text-gray-300 text-sm font-inter leading-relaxed line-clamp-2 max-h-12">
+                        Enjoyed minutes related as at on on. Creative excellence delivered with precision.
+                    </p>
+                    <div class="flex items-center justify-between mt-4 pt-3 border-t border-white/10">
+                        <div class="flex items-center gap-1 text-gray-400 text-xs">
+                            <svg class="w-3 h-3 text-primary-green" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                            </svg>
+                            <span>2 weeks ago</span>
+                        </div>
+                        <a href="{{ pd.test_url }}" class="text-primary-green text-sm font-semibold hover:text-white transition-colors flex items-center gap-1">
+                            Read More
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <!-- Row 3 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0">
+            {% for pd in pd_list|slice:"6:9" %}
+            <div class="project-card group relative bg-card-dark overflow-hidden h-[480px] w-full border-r border-b border-gray-800/50 hover:border-primary-green/20 transition-all duration-300">
+                <div class="absolute inset-0 overflow-hidden">
+                    {% if pd.pic3 %}
+                    <img class="image-zoom w-full h-full object-cover opacity-70 group-hover:opacity-100 transition-all duration-500" 
+                         src="../static/myapp/media/{{ pd.pic3 }}" 
+                         alt="{{ pd.title }}"
+                         onerror="this.src='https://via.placeholder.com/600x480?text=CreatorHub'">
+                    {% else %}
+                    <div class="w-full h-full bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center">
+                        <svg class="w-24 h-24 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent opacity-80 group-hover:opacity-70 transition-all"></div>
+                <div class="overlay-grad absolute inset-0 opacity-0 group-hover:opacity-80 transition-all duration-500 flex items-center justify-center">
+                    <a href="{{ pd.test_url }}" class="transform translate-y-8 group-hover:translate-y-0 transition-all duration-400">
+                        <div class="bg-white text-deep-green px-8 py-3 rounded-full font-bold flex items-center gap-2 shadow-2xl hover:scale-105 transition-transform">
+                            <span>Explore Project</span>
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                            </svg>
+                        </div>
+                    </a>
+                </div>
+                <div class="absolute bottom-0 left-0 right-0 p-6 z-10">
+                    <div class="mb-3">
+                        <span class="inline-block bg-primary-green/20 backdrop-blur-sm text-primary-green text-xs font-bold px-3 py-1 rounded-full border border-primary-green/40">
+                            CREATIVE
+                        </span>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white font-poppins mb-2 line-clamp-1 group-hover:text-primary-green transition-colors">
+                        {{ pd.title }}
+                    </h3>
+                    <p class="text-gray-300 text-sm font-inter leading-relaxed line-clamp-2 max-h-12">
+                        Distrusts an it contented perceived attending. Professional quality guaranteed.
+                    </p>
+                    <div class="flex items-center justify-between mt-4 pt-3 border-t border-white/10">
+                        <div class="flex items-center gap-2">
+                            <div class="flex -space-x-1">
+                                <div class="w-5 h-5 rounded-full bg-primary-green/30 border border-primary-green flex items-center justify-center text-[8px] text-primary-green">+</div>
+                            </div>
+                            <span class="text-gray-400 text-xs">1.2k views</span>
+                        </div>
+                        <a href="{{ pd.test_url }}" class="text-primary-green text-sm font-semibold hover:text-white transition-colors flex items-center gap-1">
+                            Discover
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            
+            <!-- Fill empty slots if fewer than 9 projects -->
+            {% if pd_list|length < 9 %}
+                {% for i in "x"|ljust:"9"|slice:pd_list|length|add:"-" %}
+                <div class="relative bg-card-dark overflow-hidden h-[480px] w-full border-r border-b border-gray-800/50 group">
+                    <div class="absolute inset-0 bg-gradient-to-br from-gray-800/50 to-gray-900/50 flex items-center justify-center">
+                        <div class="text-center p-6">
+                            <div class="w-20 h-20 mx-auto mb-4 bg-primary-green/10 rounded-full flex items-center justify-center">
+                                <svg class="w-10 h-10 text-primary-green/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4v16m8-8H4"></path>
+                                </svg>
+                            </div>
+                            <p class="text-gray-500 font-inter">More projects<br>coming soon</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    
+    <!-- Empty State -->
+    {% if not pd_list %}
+    <div class="flex items-center justify-center min-h-[400px]">
+        <div class="text-center p-12">
+            <div class="w-32 h-32 mx-auto mb-6 bg-gradient-to-br from-primary-green/10 to-deep-green/10 rounded-full flex items-center justify-center">
+                <svg class="w-16 h-16 text-primary-green/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                </svg>
+            </div>
+            <h3 class="text-2xl font-bold text-white mb-2">No Projects Available</h3>
+            <p class="text-gray-400">Check back soon for amazing creative work!</p>
+        </div>
+    </div>
+    {% endif %}
+    
+    <!-- CTA Section -->
+    <div class="max-w-4xl mx-auto text-center py-16 px-4">
+        <div class="bg-gradient-to-r from-primary-green/10 to-deep-green/10 rounded-3xl p-8 backdrop-blur-sm border border-primary-green/20">
+            <h3 class="text-2xl font-bold text-white mb-3">Ready to showcase your work?</h3>
+            <p class="text-gray-400 mb-6">Join CreatorHub and connect with thousands of creative professionals</p>
+            <button class="bg-gradient-to-r from-primary-green to-dark-green text-white px-8 py-3 rounded-full font-semibold hover:shadow-lg hover:shadow-primary-green/25 transition-all hover:scale-105">
+                Become a Creator
+            </button>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

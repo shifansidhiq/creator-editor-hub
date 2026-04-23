@@ -1,0 +1,40 @@
+{% extends 'myapp/creator_base.html' %}
+{% load static %}
+{% block title %}Proposal Reply{% endblock %}
+{% block body %}
+<center>
+    <h1>Proposal Reply</h1>
+     <div class="container">
+         {% if msg %}
+		<div class="alert alert-warning alert-dismissible fade show" role="alert">
+  			<strong>{{msg}}..!</strong>
+  			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    			<span aria-hidden="true">&times;</span>
+  			</button>
+		</div>
+		{% endif %}
+    <form role="form" name="frm" action="{% url 'creator_user_proposal_reply'%}" method="post"
+    enctype="multipart/form-data">
+        {% csrf_token %}
+            <input type="hidden" class="form-control" id="proposal_id"  name="proposal_id"
+                   value="{{proposal_id}}">
+        <div class="form-group">
+            <label for="remark">Answer :</label>
+            <textarea class="form-control" name="remark" id="remark"></textarea>
+        </div>
+         <div class="form-group">
+                <label for="document">Document :</label>
+                <input class="form-control" type="file" name="document" id="document">
+            </div>
+             <div class="form-group">
+            <label >price :</label>
+            <input class="form-control" type="text" name="amt" id="amt" value="">
+            
+        </div>
+       <button type="submit" class="btn btn-info" id="bt" name="bt">Reply</button>
+        <button type="reset" class="btn btn-info" id="rt" name="rt">Clear</button>
+    </form>
+     </div>
+    <h3>{{msg}}</h3>
+</center>
+{% endblock %}

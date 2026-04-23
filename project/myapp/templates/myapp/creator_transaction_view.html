@@ -1,0 +1,60 @@
+{% extends 'myapp/creator_base.html' %}
+{% load static %}
+{% block title %}Transaction {% endblock %}
+
+{% block body %}
+<center>
+    <h1>Transaction </h1>
+    <div class="container">
+        {% if msg %}
+		<div class="alert alert-warning alert-dismissible fade show" role="alert">
+  			<strong>{{msg}}..!</strong>
+  			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    			<span aria-hidden="true">&times;</span>
+  			</button>
+		</div>
+		{% endif %}
+    <form role="form" name="frm" >
+        {% csrf_token %}
+        <table class="table table-striped table-bordered">
+            <thead>
+            <tr>
+<!--                <th>Id</th>-->
+                <th>User </th>
+                <th>Amount</th>
+                <th>Mode Of Payment</th>
+                <th>Card No</th>
+                <th>Date/Time</th>
+
+<!--                <th>Action</th>-->
+            </tr>
+            </thead>
+            {% for t_obj in t_list %}
+            <tbody>
+            <tr>
+<!--                <td>{{ scl_obj.id }}</td>-->
+                {%for ul_obj in user_list %}
+                {% if ul_obj.user_id == t_obj.user_id%}
+                    <td>{{ ul_obj.fname }}</td>
+                {%endif%}
+                {%endfor%}
+
+                <td>{{t_obj.amt}}</td>
+                <td>
+
+                    {{ t_obj.payment_type }}
+
+                </td>
+                <td>{{ t_obj.card_no }}</td>
+                 <td>
+                    {{ t_obj.dt }}/{{ t_obj.tm }}
+                </td>
+            </tr>
+            <tbody>
+            {% endfor %}
+        </table>
+    </form>
+    </div>
+
+</center>
+{% endblock %}

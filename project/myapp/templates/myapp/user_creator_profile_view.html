@@ -1,0 +1,47 @@
+{% extends 'myapp/user_base.html' %}
+{% load static %}
+{% block title %}New Creator Registration{% endblock %}
+{% block body %}
+<center>
+    <h2>{{cobj.fname}} {{cobj.lname}}</h2>
+	<div class="container">
+    <form role="form" name="frm" action="{% url 'creator_details_add' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+		<div class="form-group">
+		
+		<img src="../static/myapp/media/{{cobj.pic }}" width="100" height="100">
+        </div>
+		{% comment %} <div class="form-group">
+			<label for="fname">Name</label>
+	        <label>{{cobj.fname}} {{cobj.lname}}</label
+		</div> {% endcomment %}
+		<div class="form-group">
+			<label for="contact">Contact</label>
+	        <label>{{cobj.contact}}</label>
+		</div>
+		<div class="form-group">
+			<label for="email">Email</label>
+	        <label>{{cobj.email}}</label>
+		</div>
+        
+    </form>
+	{{msg}}
+	</div>
+
+
+
+
+
+Test title
+<div class="container">
+	{% for pd in pd_list %}
+                        <div class="element-item finance">
+                            <a href="{{pd.test_url}}">
+                                <img class="img-fluid" src="../static/myapp/media/{{pd.pic1 }}" alt="alternative">
+                                <p><strong>{{pd.title}}</strong> </p>
+                            </a>
+                        </div>
+						{% endfor %}
+		</div>
+		</center>
+{% endblock %}

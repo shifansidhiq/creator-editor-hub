@@ -1,0 +1,9 @@
+Tables
+----------
+1. user_login - id, uname, passwd, u_type
+2. creator_details - id, user_id, fname, lname, pic, dob, gender, email, contact, status
+3. portfolio_details - id, creator_id, title, test_url, descp, pic1, pic2, pic3, dt, tm, price, status
+4. portfolio_rating - id, user_id, portfolio_id, rating, review, dt, tm, status
+5. purchase_details - id, portfolio_id, user_id, dt, tm, amt, payment_type, remarks, status
+6. user_details - id, user_id, fname, lname, contact, email, status
+7. search_history - id, user_id, keyword, dt, tm, status

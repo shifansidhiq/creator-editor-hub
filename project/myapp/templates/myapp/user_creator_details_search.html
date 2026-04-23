@@ -1,0 +1,20 @@
+{% extends 'myapp/user_base.html' %}
+{% load static %}
+{% block title %}Creator Search{% endblock %}
+{% block body %}
+<center>
+    <h2><font color="#366092">Creator Search</font></h2>
+    <div class="container">
+    <form name="frm"  role="form" action="{% url 'user_creator_details_search' %}" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label >Keywords</label>
+                <input class="form-control" type="text" name="key" placeholder="keywords" id="app_name">
+            </div>
+                <button type="submit" class="btn btn-info" id="bt" name="bt">Search</button>
+        <button type="reset" class="btn btn-info" id="rt" name="rt">Reset</button>
+        {{msg}}
+        </form>
+    </div>
+</center>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends 'myapp/creator_base.html' %}
+{% load static %}
+{% block title %}Add Portfolio{% endblock %}
+{% block body %}
+<center>
+    <h1>Add Portfolio</h1>
+     <div class="container">
+         <form role="form" name="frm" action="{% url 'creator_portfolio_details_add'%}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            <label > title :</label>
+            <input class="form-control" type="text" name="title" id="title" value="" required>
+        </div>
+        <div class="form-group">
+            <label > test_url :</label>
+            <input class="form-control" type="text" name="test_url" id="test_url" value="" required>
+        </div>
+        <div class="form-group">
+            <label >Description :</label>
+            <input class="form-control" type="text" name="descp" id="descp" value="" required>
+        </div>
+        <div class="form-group">
+            <label >price :</label>
+            <input class="form-control" type="text" name="price" id="price" value="" required>
+            
+        </div>
+        <div class="form-group">
+			<label for="document">Picture</label>
+	        <input class="form-control" type="file" name="document1" id="document1" required>
+	    </div>
+        <div class="form-group">
+			<label for="document">Picture</label>
+	        <input class="form-control" type="file" name="document2" id="document2" required>
+	    </div>
+        <div class="form-group">
+			<label for="document">Picture</label>
+	        <input class="form-control" type="file" name="document3" id="document3" required>
+	    </div>
+         <div class="form-group">
+			<label for="document">Zip File</label>
+	        <input class="form-control" type="file" name="document4" id="document4" required>
+	    </div>
+        <div class="form-group mt-2">
+       <button type="submit"
+        class="btn-solid-reg" id="bt" name="bt">Add</button>
+        <button type="reset"
+        class="btn-solid-reg" id="rt" name="rt">Clear</button>
+        </div>
+    </form>
+     </div>
+    <h3>{{msg}}</h3>
+</center>
+{% endblock %}
